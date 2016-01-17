@@ -1,0 +1,62 @@
+<!--
+	HTML page for simple-todo app: hosted in http://todolist_uge.meteor.com 
+ -->
+<head>
+  <title>Lista de tareas</title>
+</head>
+ 
+<body>
+  <div class="container">
+    <header>
+      <h1>Lista de tareas ({{completedCount}}/{{tasksCount}})</h1>
+      {{>loginButtons}}
+      <br>
+      
+      <label class="completed">
+      	<input type="checkbox"  checked="{{hideCompleted}}"/>
+      	Ocultar tareas completadas
+      </label>
+      <label class="textOrdered">
+      	<input type="checkbox"  checked="{{orderedByText}}"/>
+      	Ordenar por orden alfabético
+      </label>
+      <br>
+      
+      
+      {{#if currentUser}} <!-- Solo se muestra para usuarios logueados -->
+      <form class="new-task" id="newTask-textEdit">
+      	<input type="text" name="text" placeholder="Escribe aqui la nueva tarea a añadir..." />
+      </form>
+      {{/if}}
+      
+    </header>
+ 
+    <ul>
+      {{#each tasks}}
+        {{> task}}
+      {{/each}}
+    </ul>
+    
+    <p class= "credits">
+  		@ugeHidalgo 2016 ...
+  		<a href="mailto:ugeHidalgo@gmail.com">ugeHidalgo@gmail.com</a>
+  		... Powered by Meteor
+   	</p>
+  </div>
+</body>
+ 
+<template name="task">
+  <li class="{{#if checked}}checked{{/if}} {{#if important}}important{{/if}}">
+               <!-- Esto añade la clase checked si el check esta activo -->
+  	<button class="delete">&times;</button>
+  	
+  	<input type="checkbox" checked="{{checked}}" class="toggle-checked" />
+  	
+  	<button class="toggle-important">
+  	{{#if important}}!!{{else}} {{/if}}
+  	</button>
+  	
+  	<span class="text">{{formatDate createdAt}} : <strong>{{text}}</strong></span>
+<!--   	<span class="text"><strong>{{username}}:</strong> {{text}}</span> -->
+  </li>
+</template>
